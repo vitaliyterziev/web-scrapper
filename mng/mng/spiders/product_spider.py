@@ -40,8 +40,7 @@ class QuotesSpider(scrapy.Spider):
 
         name = product_dict['name']
         price = product_dict['price']['price']
-        color = [c['label'] for c in product_dict['colors']['colors'] if c['id'] == self.color_id][0]
-        size = [c['sizes'][1:] for c in product_dict['colors']['colors'] if c['id'] == self.color_id][0]
+        color, size = [(c['label'], c['sizes'][1:]) for c in product_dict['colors']['colors'] if c['id'] == self.color_id][0]
 
         with open(filename, 'w') as f:
             f.write(json.dumps({'name': name, 'price': price, 'color': color, 'size': size}, indent=4))
